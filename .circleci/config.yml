@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Run unit tests
           command: |
-            gotestsum --junitfile ${TEST_RESULTS}/gotestsum-report.xml -- $PACKAGE_NAMES
+            gotestsum --junitfile ${TEST_RESULTS}/gotestsum-report.xml
             
       - store_artifacts: # upload test summary for display in Artifacts
           path: /tmp/test-results
