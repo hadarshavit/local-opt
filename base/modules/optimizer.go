@@ -12,6 +12,6 @@ type Employee struct {
 }
 
 func (e Employee) LeavesRemaining() {
-	// fmt.Printf("%s %s has %d leaves remaining", e.FirstName, e.LastName, (e.TotalLeaves - e.LeavesTaken))
+	// fmt.Printf("%s %s hassds %d leaves remaining", e.FirstName, e.LastName, (e.TotalLeaves - e.LeavesTaken))
 }
 

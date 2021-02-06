@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite tests="0" failures="0" time="0.000000" name="github.com/hadarshavit/local-opt/base/modules">
+		<properties>
+			<property name="go.version" value="go1.13.8 linux/amd64"></property>
+		</properties>
+	</testsuite>
+	<testsuite tests="1" failures="0" time="0.000000" name="github.com/hadarshavit/local-opt/base/unitest">
+		<properties>
+			<property name="go.version" value="go1.13.8 linux/amd64"></property>
+		</properties>
+		<testcase classname="" name="TestMain" time="0.000000">
+			<failure message="Failed" type="">FAIL&#xA;FAIL&#x9;github.com/hadarshavit/local-opt/base/unitest&#x9;0.001s&#xA;</failure>
+		</testcase>
+	</testsuite>
+</testsuites>
