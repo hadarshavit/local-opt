@@ -19,8 +19,10 @@ jobs:
     ####   /go/src/bitbucket.org/circleci/go-tool
     working_directory: /go/src/github.com/hshavit/local-opt
     steps:
-      - checkout
+      - checkout:
+          path: /go/src/github.com/hshavit/local-opt
 
       # specify any bash command here prefixed with `run: `
+      - run: go build -v -n ./...
       - run: go get -v -t -d ./...
       - run: go test -v ./...
