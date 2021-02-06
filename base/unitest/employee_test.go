@@ -1,12 +1,14 @@
 package base
 
 import (
-	"local-opt/base/modules"
 	"testing"
+
+
+	modules "github.com/hadarshavit/local-opt/base/modules"
 )
 
 func TestEmployee(t *testing.T) {
 	t.Logf("hello")
-	var e base.Employee
+	var e modules.Employee
 	e.LeavesRemaining()
 }
