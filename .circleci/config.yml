@@ -20,7 +20,7 @@ jobs:
     working_directory: /go/src/github.com/hadarshavit/local-opt
     steps:
       - checkout
-      - run: mkdir -p $TEST_RESULTS # create the test results directory
+      - run: mkdir -p /tmp/test-results # create the test results directory
 
       # specify any bash command here prefixed with `run: `
       - run: go get -v -t -d ./...
