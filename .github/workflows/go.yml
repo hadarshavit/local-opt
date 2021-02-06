@@ -20,8 +20,6 @@ jobs:
 
     - name: Build base
       run: go build -v -n ./...
-      working-directory: base
 
     - name: Test base
       run: go test -v ./...
-      working-directory: base
