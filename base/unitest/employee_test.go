@@ -11,4 +11,5 @@ func TestEmployee(t *testing.T) {
 	t.Logf("hello")
 	var e modules.Employee
 	e.LeavesRemaining()
+	t.Error()
 }
