@@ -1,4 +1,4 @@
-module local-opt
+module github.com/hadarshavit/local-opt
 
 go 1.13
 
