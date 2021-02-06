@@ -1,4 +1,4 @@
-module base
+module local-opt
 
 go 1.13
 
