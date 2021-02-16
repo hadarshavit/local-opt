@@ -68,7 +68,7 @@ func (state State) swap(i int, j int) State {
 	return res
 }
 
-// CostIfSwap das
+// CostIfSwap Cost of the state if swapping p1 and p2
 func (state State) CostIfSwap(p1 int, p2 int) int {
 	cost := 0
 
@@ -115,6 +115,14 @@ func (b BasicProvider) GetBestNeighbor(state base.State) base.State {
 		}
 	}
 
+	return tspState.swap(p1, p2)
+}
+
+// GetRandomNeighbor Returns random neighbor
+func (b BasicProvider) GetRandomNeighbor(state base.State) base.State {
+	tspState := state.(State)
+	p1 := rand.Intn(len(tspState.Path) - 1)
+	p2 := p1 + rand.Intn(len(tspState.Path) - p1)
 	return tspState.swap(p1, p2)
 }
 
