@@ -1,13 +1,14 @@
 package base
 
 import (
-	"fmt"
+	"log"
 	"runtime"
 	"time"
 
 	"github.com/hadarshavit/local-opt/utils"
 )
 
+// Runner Parallel runner for optimizer
 func Runner(optimizer Optimizer) State {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	c := make(chan State) 
@@ -23,7 +24,7 @@ func Runner(optimizer Optimizer) State {
 	for i := 0; i < runtime.NumCPU(); i++ {
 		res := <- c
 		runtime := time.Now().Sub(start)
-		fmt.Println(res, res.Cost(), runtime)
+		log.Println("Path: ", res, " Cost: ", res.Cost(), " Runtime: ", runtime)
 		if res.Cost() < minVal {
 			min = res
 			minVal = min.Cost()
