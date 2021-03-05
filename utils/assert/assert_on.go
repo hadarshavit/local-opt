@@ -1,6 +1,6 @@
 // +build debug
 
-package utils
+package assert
 
 import "log"
 

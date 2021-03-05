@@ -20,9 +20,6 @@ jobs:
 
     - name: Build base
       run: go build -v -n ./...
-    
-    - name: Run
-      run: go run .
 
     - name: Test base
       run: go test -v ./...

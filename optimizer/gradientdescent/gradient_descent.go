@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"time"
 
-	base "github.com/hadarshavit/local-opt/base/modules"
-	"github.com/hadarshavit/local-opt/utils"
+	"github.com/hadarshavit/local-opt/optimizer/base"
+	"github.com/hadarshavit/local-opt/utils/assert"
 )
 
 const (
@@ -44,7 +44,7 @@ func (o Optimizer) shouldGoRandom() bool {
 
 // Run the optimizer
 func (o Optimizer) Run() base.State {
-	utils.Assert(o.cur == nil, "Invalid State")
+	assert.Assert(o.cur == nil, "Invalid State")
 
 	o.start = time.Now()
 	o.temperature = 0.99
