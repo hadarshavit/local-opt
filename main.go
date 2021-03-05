@@ -1,14 +1,18 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"time"
 
-	base "github.com/hadarshavit/local-opt/base/modules"
-	"github.com/hadarshavit/local-opt/gradientdescent"
-	"github.com/hadarshavit/local-opt/tsp"
+	"github.com/hadarshavit/local-opt/optimizer/base"
+	"github.com/hadarshavit/local-opt/optimizer/gradientdescent"
+	"github.com/hadarshavit/local-opt/problems/tsp"
+	"github.com/hadarshavit/local-opt/runner"
+	"github.com/hadarshavit/local-opt/runner/database"
+	"github.com/hadarshavit/local-opt/runner/results"
 )
 
 func configLogger() {
@@ -30,30 +34,25 @@ func main() {
 		gradientdescent.NewStochasticGradientDescentOptimizer(tspProvider, time.Second * 60, 1, 0.5),
 	}
 
-	var bestOptimizer base.Optimizer = nil
-	var bestResult base.State
-	var bestTime time.Duration
+	db := database.NewMongoAdapter()
+
+	ctx, _ := context.WithTimeout(context.Background(), time.Second * 30)
+	var best *results.RunResults = nil
 	
+	err := db.Connect(ctx)
+	if (err != nil) { log.Panicln(err) }
+
 	for _, optimizer := range optimizers {
-		start := time.Now()
-		best := base.Runner(optimizer)
-		end := time.Now()
+		cur := runner.ParallelRunner(optimizer)
 
-		totalTime := end.Sub(start)
-
-		fmt.Println("Optimizer: ", optimizer.GetName())
-		fmt.Println("Cost: ", best.Cost(), " Total run time: ", totalTime)
-		fmt.Println("Route: ", best)
-
-		if bestResult == nil  || best.Cost() < bestResult.Cost() {
-			bestOptimizer = optimizer
-			bestResult = best
-			bestTime = totalTime
+		db.SaveRunResults(ctx, cur)
+		
+		if best == nil || cur.Result < best.Result {
+			best = &cur
 		}
 	}
 
 	fmt.Println()
-	fmt.Println("Best Optimizer: ", bestOptimizer.GetName())
-	fmt.Println("Cost: ", bestResult.Cost(), " Total run time: ", bestTime)
-	fmt.Println("Route: ", bestResult)	
+	fmt.Println("Best Optimizer: ", best.OptimizerName)
+	fmt.Println("Cost: ", best.Result, " Total run time: ", best.Runtime)
 }

@@ -4,8 +4,8 @@ import (
 	"math"
 	"math/rand"
 
-	base "github.com/hadarshavit/local-opt/base/modules"
-	"github.com/hadarshavit/local-opt/utils"
+	"github.com/hadarshavit/local-opt/optimizer/base"
+	"github.com/hadarshavit/local-opt/utils/limits"
 )
 
 // Point with x,y axis
@@ -104,7 +104,7 @@ func (state State) CostIfSwap(p1 int, p2 int) int {
 func (b BasicProvider) GetBestNeighbor(state base.State) base.State {
 	tspState := state.(State)
 	p1, p2 := 0, 0
-	bestCost := utils.MaxInt
+	bestCost := limits.MaxInt
 	for i := 0; i < len(tspState.Path) - 1; i++ {
 		for j := i + 1; j <len(tspState.Path); j++ {
 			costIfSwap := tspState.CostIfSwap(i, j)
