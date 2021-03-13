@@ -14,7 +14,7 @@ definitions:
             - go test ./... -v 2>&1 | go-junit-report > test-reports/report.xml
             # Build compiles the packages
             - go build ./...
-  -  step: &Lint
+    -  step: &Lint
           name: Lint code
           image: golangci/golangci-lint:v1.31.0
           script:
@@ -26,12 +26,28 @@ pipelines:
         - step: *TestBuild
         - step: *Lint
   custom:
-    build:
+    deploy:
       - parallel:
         - step: *TestBuild
         - step: *Lint
+        - step:
+          name: Archive
+          script:
+            - git archive --format=tar.gz main -o local-opt.tar.gz
+          artifacts:
+            - sample-python-app/sample-app.tar.gz
+        - step:
+            name: Deploy to production
+            deployment: production
+            caches:
+              - pip
+            script:
+              - pipe: atlassian/heroku-deploy:0.1.1
+                variables:
+                  HEROKU_API_KEY: $HEROKU_API_KEY
+                  HEROKU_APP_NAME: $HEROKU_APP_NAME
+                  ZIP_FILE: local-opt.tar.gz
   pull-requests:
     '**':
         - step: *TestBuild
         - step: *Lint
-
