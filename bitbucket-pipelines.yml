@@ -4,11 +4,9 @@
 #  The workflow allows running tests, build and code linting on the default branch.
 
 image: golang:1.15
-
-pipelines:
-  default:
-    - parallel:
-      - step:
+definitions:
+  steps:
+    -  step: &TestBuild
           name: Test and Build
           script:
             - mkdir test-reports
@@ -16,8 +14,14 @@ pipelines:
             - go test ./... -v 2>&1 | go-junit-report > test-reports/report.xml
             # Build compiles the packages
             - go build ./...
-      - step:
+  -  step: &Lint
           name: Lint code
           image: golangci/golangci-lint:v1.31.0
           script:
             - golangci-lint run -v
+pipelines:
+  default:
+    - parallel:
+      - step: *TestBuild
+      - step: *Lint
+
