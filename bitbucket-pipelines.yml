@@ -20,8 +20,18 @@ definitions:
           script:
             - golangci-lint run -v
 pipelines:
-  default:
-    - parallel:
-      - step: *TestBuild
-      - step: *Lint
+  branches:
+    main:
+      - parallel:
+        - step: *TestBuild
+        - step: *Lint
+  custom:
+    build:
+      - parallel:
+        - step: *TestBuild
+        - step: *Lint
+  pull-requests:
+    '**':
+        - step: *TestBuild
+        - step: *Lint
 
